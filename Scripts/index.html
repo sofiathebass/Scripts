@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Translational Medicine and Stem Cell Association - TMSCA at UC Berkeley</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" href="https://tmsca.berkeley.edu/images/logo.png">
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script>
+		function othername() {
+    		var input = document.getElementById("userInput").value;
+    		alert(input);
+		}
+		function ClearFields() {
+			document.getElementById("userInput").value = "";
+			document.getElementById("userInput2").value = "";
+		}
+		</script>
+		<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+          <py-env>
+            - paths:
+              - ./example.py
+          </py-env>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper" style="background-color:black">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="officers.html">Add Script</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<header style="text-align:center; color:whitesmoke">
+								<h1>Lab Scripts</h1>
+								<p>Are you lazy? I am! Here's what I do to make my life easier instead of using my brain
+							</p>
+							<button id="submit-button" type="submit" style="margin-top: 20px;" pys-onClick="twofunc" >Submit </button>
+								<hr />
+
+							</header>
+							<section class="tiles">
+
+
+
+								<article class="style5">
+									<span class="image">
+										<img src="./purplebox.png" alt="" />
+									</span>
+									<a>
+										<h2>Literally Addition</h2>
+										<div class="content">
+        									<b> <label id="lucky"></label></b>
+											<p style="margin-bottom: -10px;">Add two integers as input</p>
+											<form id="form" onsubmit="return false;">
+												<div style="display: inline-block; margin-right: 20px;" >
+													<input type="text" id="userInput" style="width:60px; height:40px; margin-top: 20px;"/> 
+												</div>
+												<div style="display: inline-block">
+													<input type="text" id="userInput2" style="width:60px; height:40px; margin-top: 20px;"/>
+												</div>
+												<br>
+												<div style="display: inline-block; margin-top:10px; font-size: 28px;"> Answer: </div>
+												<div id="test-output" style="display: inline-block; font-weight: bold; font-size: 28px;"></div>
+												<br>
+												
+											</form>
+        									<py-script>
+												def HelloWorld():
+													return ('Hello World')
+
+												def my_function(*args, **kwargs):
+ 													text = Element('userInput').element.value
+														text2 = Element('userInput2').element.value
+											 		if text == "4":
+															Element('test-output').element.innerText = type(text2)
+														else:
+															Element('test-output').element.innerText = "Nope"
+														return ('Hi')	
+
+												def addition(*args, **kwargs):
+													text1 = Element('userInput').element.value
+													text2 = Element('userInput2').element.value
+													if (text1 != '') and (text2 != ''):
+														text1_int = int(text1)
+														text2_int = int(text2)
+														Element('test-output').element.innerText = text1_int+text2_int
+													Element('userInput').element.value = ''
+													Element('userInput2').element.value = ''
+
+												def addition2(*args, **kwargs):
+													text1 = Element('userInput3').element.value
+													text2 = Element('userInput4').element.value
+													if (text1 != '') and (text2 != ''):
+														text1_int = int(text1)
+														text2_int = int(text2)
+														Element('test-output2').element.innerText = text1_int+text2_int
+													Element('userInput3').element.value = ''
+													Element('userInput4').element.value = ''
+
+												def twofunc(*args, **kwargs):
+													addition(*args, **kwargs)
+													addition2(*args, **kwargs)
+
+       										</py-script>
+										</div>
+									</a>
+								</article>
+
+								<article class="style1">
+									<span class="image">
+										<img src="./pinkbox.png" alt="" />
+									</span>
+									<a>
+										<h2>Literally Addition</h2>
+										<div class="content">
+        									<b> <label id="lucky3"></label></b>
+											<p style="margin-bottom: -10px;">Add two integers as input</p>
+											<form id="form" onsubmit="return false;">
+												<div style="display: inline-block; margin-right: 20px;" >
+													<input type="text" id="userInput3" style="width:60px; height:40px; margin-top: 20px;"/> 
+												</div>
+												<div style="display: inline-block">
+													<input type="text" id="userInput4" style="width:60px; height:40px; margin-top: 20px;"/>
+												</div>
+												<br>
+												<div style="display: inline-block; margin-top:10px; font-size: 28px;"> Answer: </div>
+												<div id="test-output2" style="display: inline-block; font-weight: bold; font-size: 28px;"></div>
+												<br>
+												
+											</form>
+										</div>
+									</a>
+								</article>
+
+
+								<article class="style5">
+									<span class="image">
+										<img src="purplebox.png" alt="" />
+									</span>
+									<a>
+										<h2>To Do</h2>
+										<div class="content">
+											<button type="button" id="button">run Python</button>
+
+											<py-script>
+											from js import document 
+											from pyodide import create_proxy
+
+											def runPython(hi):
+    											return ('hi')
+
+											function_proxy = create_proxy(runPython)
+
+											document.getElementById("button").addEventListener("click", function_proxy)
+											</py-script>
+										</div>
+									</a>
+								</article>
+
+
+
+
+
+								<article class="style1">
+									<span class="image">
+										<img src="pinkbox.png" />
+									</span>
+									<a>
+										<h2>To Do</h2>
+										<div class="content">
+											<p><b>UC Berkeley Bioengineering</b><br>Adeno-Associated Viral<br>Delivery Vehicles for Gene Therapy</p>
+										</div>
+									</a>
+								</article>
+
+								<article class="style5">
+									<span class="image">
+										<img src="purplebox.png" alt="" />
+									</span>
+									<a>
+										<h2>To Do</h2>
+										<div class="content">
+											<p><b>University of Minnesota Neurosurgery</b><br>How Brain Cancers Become<br>Resistant to Radiation</p>
+										</div>
+									</a>
+								</article>
+
+								<article class="style1">
+									<span class="image">
+										<img src="pinkbox.png" alt="" />
+									</span>
+									<a>
+										<h2>To Do</h2>
+										<div class="content">
+											<p><b>UC Berkeley Optometry</b><br>Ocular Genetics, Metabolism, and<br>Tissue Engineering</p>
+										</div>
+									</a>
+								</article>
+
+
+
+
+
+								<article class="style5">
+									<span class="image">
+										<img src="purplebox.png" alt="" />
+									</span>
+									<a>
+										<h2>To Do</h2>
+										<div class="content">
+											<p><b>The California Stem Cell Agency</b><br>Protecting Patients with Standards for Stem Cell Based Treatments</p>
+										</div>
+									</a>
+								</article>
+
+								<article class="style1">
+									<span class="image">
+										<img src="pinkbox.png" alt="" />
+									</span>
+									<a>
+										<h2>To Do</h2>
+										<div class="content">
+											<p><b>The University of British Columbia</b><br>CRISPR-based Gene Therapy for Aniridia</p>
+										</div>
+									</a>
+								</article>
+
+								<article class="style5">
+									<span class="image">
+										<img src="purplebox.png" alt="" />
+									</span>
+									<a>
+										<h2>To Do</h2>
+										<div class="content">
+											<p><b>UCSF Cell & Tissue Biology</b><br>The Cell Biology of<br>Embryonic Stem Cell Potency</p>
+										</div>
+									</a>
+								</article>
+
+								
+
+								
+
+							</section>
+						</div>
+					</div>
+
+				
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
