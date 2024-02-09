@@ -75,26 +75,67 @@ class ReflexAgent(Agent):
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
         "*** YOUR CODE HERE ***"
-        #print("successorGameState", successorGameState)
-        #print("successorGameState.getScore()", successorGameState.getScore())
-        #print("newPos", newPos)
-        #print("newFood", newFood)
-        #print("newGhostStates", newGhostStates)
-        #print("newScaredTimes", newScaredTimes)
+        #ok my new strat 
+        #calculate distance between me and the ghosts 
+        #calculate distance between me and the food 
+        #for i in successor game states calculate distance between me and the ghosts
+        #for i in successor game states calculate distace between me and the food 
+        stateGhost = 0
+        stateFood = 0
+        propGhost = 0
+        propFood = 0
+        closeFood = 999999
+        closeGhost = 0
+        closeGhostGhost = 0
+
+        #calculate distance between me and the ghosts 
+        lenGhosts = len(currentGameState.getGhostStates())
+        if lenGhosts > 0:
+            for i in range(1, lenGhosts):
+                stateGhost += manhattanDistance(currentGameState.getGhostPosition(i), currentGameState.getPacmanPosition())
+            stateGhost = stateGhost/lenGhosts
+
+        #calculate distance between me and the food 
+        if len(currentGameState.getFood().asList()) > 0:
+            for i in currentGameState.getFood().asList():
+                stateFood += manhattanDistance(i, currentGameState.getPacmanPosition())
+            stateFood = stateFood/len(currentGameState.getFood().asList())
         
-        #these def suck, i think the idea will be to literally calculate ghost position and where it's going, and then avoid it... + get food ofc 
-        # print("newGhostStates[0]", newGhostStates[0])
-        # man = 0
-        # for i in range(1, len(newGhostStates)):
-        #     man += manhattanDistance(successorGameState.getGhostPosition(i), newPos)
-        # food = 0
-        # for i in newFood:
-        #     for j in i:
-        #         if j == "T":
-        #             food +=1
+        #calculate total and closest distance between proposed successor and the ghosts, high distance is better so add
+        lenGhosts = len(newGhostStates)
+        if lenGhosts > 0:
+            closeGhost = 999999
+            for i in range(1, lenGhosts):
+                dist = manhattanDistance(successorGameState.getGhostPosition(i), newPos)
+                propGhost += dist 
+                if dist < closeGhost: 
+                    closeGhost = dist
+                    closeGhostGhost = i
+            propGhost = propGhost/lenGhosts
+        
+        #add second closest ghost to closeGhost to get closest two ghosts 
+        if lenGhosts > 1:
+            closeGhost2 = 999999
+            for i in range(1, lenGhosts):
+                dist = manhattanDistance(successorGameState.getGhostPosition(i), successorGameState.getGhostPosition(closeGhostGhost))
+                if dist < closeGhost2: 
+                    closeGhost2 = dist
+            closeGhost += closeGhost2
+
+        #calculate total and closest distance between proposed successor and all the food, low distance is better so subtract
+        if len(newFood.asList()) > 0:
+            for i in newFood.asList():
+                dist = manhattanDistance(i, newPos)
+                propFood += dist
+                if dist < closeFood: 
+                    closeFood = dist
+            propFood = propFood/len(newFood.asList())
+        else:
+            closeFood = 0
+
 
         
-        return successorGameState.getScore()
+        return 2*successorGameState.getScore() - closeFood + closeGhost
 
 def scoreEvaluationFunction(currentGameState: GameState):
     """
@@ -302,7 +343,47 @@ def betterEvaluationFunction(currentGameState: GameState):
     DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    propGhost = 0
+    propFood = 0
+    closeFood = 999999
+    closeGhost = 0
+    closeGhostGhost = 0
+    
+    #calculate closest distance between state and the ghosts, high distance is better so add
+    lenGhosts = len(currentGameState.getGhostStates())
+    if lenGhosts > 0:
+        closeGhost = 999999
+        for i in range(1, lenGhosts):
+            dist = manhattanDistance(currentGameState.getGhostPosition(i), currentGameState.getPacmanPosition())
+            propGhost += dist 
+            if dist < closeGhost: 
+                closeGhost = dist
+                closeGhostGhost = i
+        propGhost = propGhost/lenGhosts
+    
+    #add second closest ghost to closeGhost to get closest two ghosts 
+    if lenGhosts > 1:
+        closeGhost2 = 999999
+        for i in range(1, lenGhosts):
+            dist = manhattanDistance(currentGameState.getGhostPosition(i), currentGameState.getGhostPosition(closeGhostGhost))
+            if dist < closeGhost2: 
+                closeGhost2 = dist
+        closeGhost += closeGhost2
+
+    #calculate total and closest distance between proposed successor and all the food, low distance is better so subtract
+    if len(currentGameState.getFood.asList()) > 0:
+        for i in currentGameState.getFood.asList():
+            dist = manhattanDistance(i, currentGameState.getPacmanPosition())
+            propFood += dist
+            if dist < closeFood: 
+                closeFood = dist
+        propFood = propFood/len(currentGameState.getFood.asList())
+    else:
+        closeFood = 0
+
+    print("each move", currentGameState.getScore(), closeFood, closeGhost)
+
+    return currentGameState.getScore() - closeFood + closeGhost
 
 # Abbreviation
 better = betterEvaluationFunction
